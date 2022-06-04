@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,25 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/index',[\App\Http\Controllers\PostController::class,'index']);
+Route::get('/data/{category}', [PostController::class, 'getByCategory']);
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/create', function () {
-    return view('create');
-});
-
-Route::middleware(['jwt-auth'])->group(function (){
-    Route::post('/post/{category}',[\App\Http\Controllers\PostController::class,'store']);
-//Route::delete('/delete/{id}',[\App\Http\Controllers\PostController::class,'destroy']);
-    Route::delete('/delete/{category}/{id}',[\App\Http\Controllers\PostController::class,'destroy']);
-    Route::get('/edit/{id}',[\App\Http\Controllers\PostController::class,'edit']);
-
-    Route::delete('/deleteimage/{id}',[\App\Http\Controllers\PostController::class,'deleteimage']);
-    Route::delete('/deletecover/{id}',[\App\Http\Controllers\PostController::class,'deletecover']);
-
-    Route::put('/update/{id}',[\App\Http\Controllers\PostController::class,'update']);
-});
-
+Route::get('/create/{category}', [PostController::class,'make']);
+Route::post('/post/{category}', [PostController::class, 'store']);
+Route::delete('/delete/{id}',[PostController::class,'destroy']);
+Route::get('/edit/{id}', [PostController::class, 'edit']);
+Route::put('/update/{id}', [PostController::class, 'update']);

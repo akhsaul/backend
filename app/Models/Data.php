@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Post;
-class Image extends Model
+
+class Data extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'image',
-        'post_id',
-    ];
 
-    public function posts(){
-        return $this->belongsTo(Post::class);
-    }
+    protected $fillable=[
+        'name',
+        'title',
+        'image',
+        'sound',
+        'category',
+    ];
 }

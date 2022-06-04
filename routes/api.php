@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\DataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +13,4 @@ use App\Http\Controllers\UserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/index',[\App\Http\Controllers\PostController::class,'index']);
-
-Route::post('/login',[UserController::class,'login']);
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-route::post('/create',[ImageCrudController::class,'create']);
+Route::get('/data/{category}', [DataController::class, 'getByCategory']);

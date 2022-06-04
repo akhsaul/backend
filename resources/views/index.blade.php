@@ -1,7 +1,3 @@
-<?php
-$ct = $_GET['ct']
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +6,8 @@ $ct = $_GET['ct']
     <title>Admin Panel</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('template/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- overlayScrollbars -->
@@ -23,7 +20,8 @@ $ct = $_GET['ct']
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__wobble" src="{{ asset('template/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
+        <img class="animation__wobble" src="{{ asset('template/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo"
+             height="60" width="60">
     </div>
 
     <!-- Navbar -->
@@ -34,7 +32,7 @@ $ct = $_GET['ct']
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
+                <a href="/" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
@@ -51,7 +49,8 @@ $ct = $_GET['ct']
                 <div class="navbar-search-block">
                     <form class="form-inline">
                         <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                                   aria-label="Search">
                             <div class="input-group-append">
                                 <button class="btn btn-navbar" type="submit">
                                     <i class="fas fa-search"></i>
@@ -81,8 +80,9 @@ $ct = $_GET['ct']
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
-            <img src="{{ asset('template/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <a href="/" class="brand-link">
+            <img src="{{ asset('template/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+                 class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">AdminLTE 3</span>
         </a>
 
@@ -101,7 +101,8 @@ $ct = $_GET['ct']
             <!-- SidebarSearch Form -->
             <div class="form-inline">
                 <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                           aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-sidebar">
                             <i class="fas fa-search fa-fw"></i>
@@ -112,7 +113,8 @@ $ct = $_GET['ct']
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item menu-open">
@@ -132,67 +134,66 @@ $ct = $_GET['ct']
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Laporan Masuk
-                            </p>
-                    </li>
+                </ul>
             </nav>
             <!-- /.sidebar-menu -->
         </div>
         <!-- /.sidebar -->
     </aside>
 
-    <div class="container" style="margin-top: 50px;">
+    <div class="container" style="margin-top: 100px;">
 
-        <h3 class="text-center text-danger"><b>Data</b> </h3>
-        <a href="/create?ct=<?php echo $ct ?>" class="btn btn-outline-success">Add New Post</a>
+        <h3 class="text-center text-danger"><b>Data {{ $category }}</b></h3>
+        <a href="/create/{{ $category }}" class="btn btn-outline-success">Add New Data</a>
 
-        <table class="table">
+        <table class="table" style="text-align: center">
             <thead>
             <tr>
                 <th>ID</th>
                 <th>Nama</th>
                 <th>Inggrisnya</th>
-                <th>Pengucapan</th>
-                <th>Cover</th>
+                <th>Gambar</th>
+                <th>Suara</th>
                 <th>Update</th>
                 <th>Delete</th>
             </tr>
             </thead>
             <tbody>
 
-
             @foreach ($posts as $post)
-            <tr>
-                <th scope="row">{{ $post->id }}</th>
-                <td>{{ $post->title }}</td>
-                <td>{{ $post->name }}</td>
-                <td>{{ $post->body }}</td>
-                <td><img src="cover/{{ $post->cover }}"  class="img-responsive" style=" max-height:100px; max-width:100px" alt="" srcset=""></td>
-                <td><a href="/edit/{{ $post->id }}" class="btn btn-outline-primary">Update</a></td>
-                <td>
-                    <form action="/delete/{{ $post->id }}" method="post">
-                        <button class="btn btn-outline-danger" onclick="return confirm('Are you sure?');" type="submit">Delete</button>
-                        @csrf
-                        @method('delete')
-                    </form>
-                </td>
+                <tr>
+                    <th scope="row">{{ $post->id }}</th>
+                    <td>{{ $post->name }}</td>
+                    <td>{{ $post->title }}</td>
+                    <td><img src="/images/{{ $post->image }}" class="img-responsive"
+                             style=" max-height:100px; max-width:100px" alt="" srcset=""></td>
+                    <td><audio controls src="/sounds/{{ $post->sound }}"></audio></td>
+                    <td><a href="/edit/{{ $post->id }}" class="btn btn-outline-primary">Update</a></td>
+                    <td>
+                        <form action="/delete/{{ $post->id }}" method="post">
+                            <button class="btn btn-outline-danger"
+                                    onclick="return confirm('Item with id {{ $post->id }} will be deleted.\nAre you sure?');"
+                                    type="submit">Delete
+                            </button>
+                            @csrf
+                            @method('delete')
+                        </form>
+                    </td>
 
-            </tr>
+                </tr>
             @endforeach
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Control sidebar content goes here -->
+            </aside>
+            <!-- /.control-sidebar -->
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
-
-    <!-- Main Footer -->
-    <footer class="main-footer">
-    </footer>
+            <!-- Main Footer -->
+            <footer class="main-footer">
+            </footer>
+            </tbody>
+        </table>
+    </div>
 </div>
 <!-- ./wrapper -->
 

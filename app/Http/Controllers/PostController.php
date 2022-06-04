@@ -2,184 +2,124 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
-use App\Models\Post;
+use App\Models\Data;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    private static $categorys = array('Hewan', 'Benda', 'Tumbuhan', 'Buah');
+
+    public function getByCategory(Request $request, $category)
     {
-        if ($request->has('ct')){
-            $category = $request->input('ct');
-            $posts=Post::where('category',$category)->get();
+        if (in_array($category, self::$categorys)) {
+            try {
+                $post = Data::where('category', $category)->get();
+            } catch (Exception $e) {
+                abort(500);
+            }
+            return view('index')->with('posts', $post)->with('category', $category);
+        } else {
+            abort(404);
         }
-        return view('index')->with('posts',$posts);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function make($category)
     {
-        //
+        if (in_array($category, self::$categorys)) {
+            return view('create')->with('category', $category);
+        } else {
+            abort(404);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
     public function store(Request $request, $category)
     {
-        if($request->hasFile("cover")){
-            $file=$request->file("cover");
-            $imageName=time().'_'.$file->getClientOriginalName();
-            $file->move(\public_path("cover/"),$imageName);
+        if (in_array($category, self::$categorys)) {
+            if ($request->hasFile("image") && $request->hasFile('sound')) {
+                $image = $request->file("image");
+                $sound = $request->file('sound');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $soundName = time() . '_' . $sound->getClientOriginalName();
+                $image->move(\public_path("images/"), $imageName);
+                $sound->move(\public_path("sounds/"), $soundName);
 
-            $post =new Post([
-                "title" =>$request->title,
-                "name" =>$request->name,
-                "body" =>$request->body,
-                "category" =>$request->category,
-                "cover" =>$imageName,
-            ]);
-           $post->save();
-        }
-
-            if($request->hasFile("images")){
-                $files=$request->file("images");
-                foreach($files as $file){
-                    $imageName=time().'_'.$file->getClientOriginalName();
-                    $request['post_id']=$post->id;
-                    $request['image']=$imageName;
-                    $file->move(\public_path("/images"),$imageName);
-                    Image::create($request->all());
-
+                try {
+                    Data::create([
+                        "name" => $request->name,
+                        "title" => $request->title,
+                        "image" => $imageName,
+                        "sound" => $soundName,
+                        "category" => $category,
+                    ]);
+                } catch (Exception $e) {
+                    abort(500);
                 }
+                return redirect('/data/' . $category);
+            } else {
+                abort(400);
             }
-
-            return redirect("/");
+        } else {
+            abort(404);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
     public function edit($id)
     {
-       $posts=Post::findOrFail($id);
-        return view('edit')->with('posts',$posts);
+        $posts = Data::findOrFail($id);
+        return view('edit')->with('posts', $posts);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-     $post=Post::findOrFail($id);
-     if($request->hasFile("cover")){
-         if (File::exists("cover/".$post->cover)) {
-             File::delete("cover/".$post->cover);
-         }
-         $file=$request->file("cover");
-         $post->cover=time()."_".$file->getClientOriginalName();
-         $file->move(\public_path("/cover"),$post->cover);
-         $request['cover']=$post->cover;
-     }
+        $post = Data::findOrFail($id);
 
-        $post->update([
-            "title" =>$request->title,
-            "name"=>$request->name,
-            "body"=>$request->body,
-            "category"=>$request->category,
-            "cover"=>$post->cover,
-        ]);
+        if ($request->hasFile("image") && $request->hasFile('sound')) {
 
-        if($request->hasFile("images")){
-            $files=$request->file("images");
-            foreach($files as $file){
-                $imageName=time().'_'.$file->getClientOriginalName();
-                $request["post_id"]=$id;
-                $request["image"]=$imageName;
-                $file->move(\public_path("images"),$imageName);
-                Image::create($request->all());
+            $image = $request->file("image");
+            $sound = $request->file('sound');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $soundName = time() . '_' . $sound->getClientOriginalName();
+            $image->move(\public_path("images/"), $imageName);
+            $sound->move(\public_path("sounds/"), $soundName);
 
+            if (File::exists("images/" . $post->image)) {
+                File::delete("images/" . $post->image);
             }
+            if (File::exists("sounds/" . $post->sound)) {
+                File::delete("sounds/" . $post->sound);
+            }
+
+            try {
+                Data::where('id', $id)->update([
+                    "name" => $request->name,
+                    "title" => $request->title,
+                    "image" => $imageName,
+                    "sound" => $soundName,
+                    "category" => $post->category,
+                ]);
+            } catch (Exception $e) {
+                abort(500);
+            }
+
+            return redirect('/data/'.$post->category);
+        } else{
+            abort(400);
         }
-
-        return redirect("/");
-
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function destroy($id)
     {
-         $posts=Post::findOrFail($id);
+        $posts = Data::findOrFail($id);
 
-         if (File::exists("cover/".$posts->cover)) {
-             File::delete("cover/".$posts->cover);
-         }
-         $images=Image::where("post_id",$posts->id)->get();
-         foreach($images as $image){
-         if (File::exists("images/".$image->image)) {
-            File::delete("images/".$image->image);
+        if (File::exists("images/" . $posts->image)) {
+            File::delete("images/" . $posts->image);
         }
-         }
-         $posts->delete();
-         return back();
-
-
+        if (File::exists("sounds/" . $posts->sound)) {
+            File::delete("sounds/" . $posts->sound);
+        }
+        $posts->delete();
+        return back();
     }
-
-    public function deleteimage($id){
-        $images=Image::findOrFail($id);
-        if (File::exists("images/".$images->image)) {
-           File::delete("images/".$images->image);
-       }
-
-       Image::find($id)->delete();
-       return back();
-   }
-
-   public function deletecover($id){
-    $cover=Post::findOrFail($id)->cover;
-    if (File::exists("cover/".$cover)) {
-       File::delete("cover/".$cover);
-   }
-   return back();
-}
-
-
 }
