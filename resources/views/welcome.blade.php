@@ -30,7 +30,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
+                <a href="/" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
@@ -77,7 +77,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href="/" class="brand-link">
             <img src="{{ asset('template/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">AdminLTE 3</span>
         </a>
@@ -128,13 +128,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Laporan Masuk
-                            </p>
-                        </li>
+                </ul>
             </nav>
             <!-- /.sidebar-menu -->
         </div>
@@ -148,7 +142,7 @@
         <div class="card-body">
             <h5 class="card-title ">Hewan</h5>
             <p class="card-text"></p>
-            <a href="/index?ct=hewan" class="btn btn-primary d-flex justify-content-center">Lihat Data</a>
+            <a href="/data/Hewan" class="btn btn-primary d-flex justify-content-center">Lihat Data</a>
         </div>
     </div>
     <div class="card" style="margin-top: 5%; margin-left: 18%; margin-right: 18%; width: 18rem; ">
@@ -156,7 +150,7 @@
         <div class="card-body">
             <h5 class="card-title">Buah</h5>
             <p class="card-text"></p>
-            <a href="/index?ct=buah" class="btn btn-primary">Lihat Data</a>
+            <a href="/data/Buah" class="btn btn-primary">Lihat Data</a>
         </div>
     </div>
     <div class="card" style="margin-top: 5%; margin-left: 18%; margin-right: 18%; width: 18rem; ">
@@ -164,7 +158,7 @@
         <div class="card-body">
             <h5 class="card-title">Tumbuhan</h5>
             <p class="card-text"></p>
-            <a href="/index?ct=tumbuhan" class="btn btn-primary">Lihat Data</a>
+            <a href="/data/Tumbuhan" class="btn btn-primary">Lihat Data</a>
         </div>
     </div>
     <div class="card" style="margin-top: 5%; margin-left: 18%; margin-right: 18%; width: 18rem; ">
@@ -172,16 +166,9 @@
         <div class="card-body">
             <h5 class="card-title">Benda</h5>
             <p class="card-text"></p>
-            <a href="/index?ct=benda" class="btn btn-primary">Lihat Data</a>
+            <a href="/data/Benda" class="btn btn-primary">Lihat Data</a>
         </div>
     </div>
-
-
-
-            </tbody>
-        </table>
-    </div>
-
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
