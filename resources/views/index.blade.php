@@ -90,11 +90,8 @@
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                </div>
                 <div class="info">
-                    <a href="#" class="d-block">Admin</a>
+                    <a href="/user/profile" class="d-block">{{ Auth::user()->name }}</a>
                 </div>
             </div>
 
@@ -127,7 +124,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/" class="nav-link active">
+                                <a href="/dashboard" class="nav-link active">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Resource</p>
                                 </a>
@@ -141,7 +138,26 @@
         <!-- /.sidebar -->
     </aside>
 
-    <div class="container" style="margin-top: 100px;">
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0"></h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active">Data</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <div class="container" style="margin-top: 20px;">
 
         <h3 class="text-center text-danger"><b>Data {{ $category }}</b></h3>
         <a href="/create/{{ $category }}" class="btn btn-outline-success">Add New Data</a>

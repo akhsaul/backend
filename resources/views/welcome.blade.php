@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('template/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('template/dist/css/adminlte.min.css')}}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -30,44 +31,16 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="/" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
+                <a href="/" class="nav-link">Dashboard</a>
             </li>
         </ul>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-            <!-- Navbar Search -->
-            <li class="nav-item">
-                <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                    <i class="fas fa-search"></i>
-                </a>
-                <div class="navbar-search-block">
-                    <form class="form-inline">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-navbar" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                     <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                    <i class="fas fa-th-large"></i>
                 </a>
             </li>
         </ul>
@@ -79,18 +52,15 @@
         <!-- Brand Logo -->
         <a href="/" class="brand-link">
             <img src="{{ asset('template/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <span class="brand-text font-weight-light">Admin Panel</span>
         </a>
 
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                </div>
+            <div class="user-panel user-end mt-3 pb-3 mb-3 d-flex">
                 <div class="info">
-                    <a href="#" class="d-block">Admin</a>
+                    <a href="/user/profile" class="d-block">{{ Auth::user()->name }}</a>
                 </div>
             </div>
 
@@ -136,37 +106,59 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Kategori</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+              <li class="breadcrumb-item active">Resource</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
     <!-- Category -->
-    <div class="card" style="margin-top: 5%; margin-left: 18%; margin-right: 18%; width: 18rem; ">
-        <img src="images/hewan-kategori.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title ">Hewan</h5>
-            <p class="card-text"></p>
-            <a href="/data/Hewan" class="btn btn-primary d-flex justify-content-center">Lihat Data</a>
+    <div class="container">
+        <div class="row">
+            <div class="card mt-1 col-md-4" style="margin: 5px; ">
+            <img src="images/hewan-kategori.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title ">Hewan</h5>
+                    <p class="card-text"></p>
+                    <a href="/data/Hewan" class="btn btn-primary">Lihat Data</a>
+                </div>
         </div>
-    </div>
-    <div class="card" style="margin-top: 5%; margin-left: 18%; margin-right: 18%; width: 18rem; ">
-        <img src="images/buah-kategori.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Buah</h5>
-            <p class="card-text"></p>
-            <a href="/data/Buah" class="btn btn-primary">Lihat Data</a>
+        <div class="card mt-1 col-md-4" style="margin: 5px; ">
+            <img src="images/buah-kategori.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Buah</h5>
+                    <p class="card-text"></p>
+                    <a href="/data/Buah" class="btn btn-primary">Lihat Data</a>
+                </div>
         </div>
-    </div>
-    <div class="card" style="margin-top: 5%; margin-left: 18%; margin-right: 18%; width: 18rem; ">
-        <img src="images/tumbuhan-kategori.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Tumbuhan</h5>
-            <p class="card-text"></p>
-            <a href="/data/Tumbuhan" class="btn btn-primary">Lihat Data</a>
+        <div class="card mt-1 col-md-4" style="margin: 5px; ">
+            <img src="images/tumbuhan-kategori.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Tumbuhan</h5>
+                    <p class="card-text"></p>
+                    <a href="/data/Tumbuhan" class="btn btn-primary">Lihat Data</a>
+                </div>
         </div>
-    </div>
-    <div class="card" style="margin-top: 5%; margin-left: 18%; margin-right: 18%; width: 18rem; ">
-        <img src="images/benda-kategori.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Benda</h5>
-            <p class="card-text"></p>
-            <a href="/data/Benda" class="btn btn-primary">Lihat Data</a>
+        <div class="card mt-2 col-md-4" style="margin: 5px; ">
+            <img src="images/benda-kategori.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Benda</h5>
+                    <p class="card-text"></p>
+                    <a href="/data/Benda" class="btn btn-primary">Lihat Data</a>
+                </div>
+            </div>
         </div>
     </div>
 
